@@ -26,7 +26,10 @@ contract CardMarketplace {
     }
 
     function buyCard(uint256 cardId) public {
+        //Validate card exists
+        require(cardId < nextCardId, "Card does not exist");
         Card storage card = cards[cardId];
+        require(card.owner != msg.sender, "You already own this card");
         require(token.transferFrom(msg.sender, card.owner, card.price), "Payment failed");
         card.owner = msg.sender;
     }

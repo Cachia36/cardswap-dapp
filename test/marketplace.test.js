@@ -7,7 +7,7 @@ describe("CardMarketplace", function () {
     beforeEach(async () => {
         const signers = await ethers.getSigners();
         console.log("Signers Available:", signers.length);
-        [owner, user] = await ethers.getSigners();
+        [owner, user, attacker] = await ethers.getSigners();
 
         Token = await ethers.getContractFactory("CardToken");
         token = await Token.deploy();
@@ -21,6 +21,8 @@ describe("CardMarketplace", function () {
 
         // Give user some tokens
         await token.transfer(user.address, ethers.parseEther("1000"));
+        //Give attacker some tokens
+        await token.transfer(attacker.address, ethers.parseEther("1000"));
     });
 
     it("should mint a new card", async function () {
@@ -45,4 +47,31 @@ describe("CardMarketplace", function () {
         const card = await marketplace.getCard(0);
         expect(card[3]).to.equal(user.address); // new owner
     });
+
+    /*
+    To implement
+    Nonexistend card - reverts if the card Id doesn't exist
+    */
+
+    it("Should fail if a user does not have enough tokens", async function () {
+        await marketplace.mintCard("Leviathan", "Rare", ethers.parseEther("500"));
+        await token.connect(attacker).approve(await marketplace.getAddress(), ethers.parseEther("100"));
+        await expect(marketplace.connect(attacker).buyCard(0)).to.be.reverted;
+    });
+
+    it("Should fail if a user tries to buy a card which they already own", async function () {
+        await marketplace.mintCard("Troll", "Epic", ethers.parseEther("50"));
+        await token.connect(owner).approve(await marketplace.getAddress(), ethers.parseEther("50"));
+
+        await expect(
+            marketplace.connect(owner).buyCard(0)
+        ).to.be.revertedWith("You already own this card");
+    });
+
+    it("Should fail if a user tries to buy a card that does not exist", async function () {
+        await token.connect(owner).approve(await marketplace.getAddress(), ethers.parseEther("50"));
+        await expect(
+            marketplace.connect(owner).buyCard(0)
+        ).to.be.revertedWith("Card does not exist");
+    })
 });
