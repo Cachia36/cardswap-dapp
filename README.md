@@ -78,3 +78,12 @@ To interact with the DApp, you must have the MetaMask browser extension installe
 - Buy cards using the custom token
 - Display card metadata graphically
 - All interactions use a local Ethereum network (Ganache)
+
+## Test Units
+To run the test units run this from the root directory: ```npx hardhat test test/CardMarketplace.test.js```
+Test include:
+- Minting a card
+- Buying a card
+- Buying a card with not enough tokens
+- Buying own card
+- Buying nonexistent card
