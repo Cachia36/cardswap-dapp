@@ -25,7 +25,8 @@ Enter the hardhat.config.js file and past the Mnemonic copied from Ganache to th
 From the root directory run:
 ```npx hardhat compile ```
 ```npx hardhat run scripts/deploy.js --network localhost```
-### 5. Start the react frontend
+This will create 1,000,000 CARD tokens to the deployer (The first account given by ganache)
+### 6. Start the react frontend
 ```cd frontend``` then 
 ```npm start```
 
