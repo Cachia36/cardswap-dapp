@@ -4,7 +4,7 @@ import CardTokenABI from "./abis/CardToken.json";
 import CardMarketplaceABI from "./abis/CardMarketplace.json";
 
 const CARDTOKEN_ADDRESS = "0x7d48dd8A2f20776099A66478f227e058F7294317";
-const MARKETPLACE_ADDRESS = "0x04A24343C31bE5Cb65815656F74f246Fc52AEB7c";
+const MARKETPLACE_ADDRESS = "0x7331c2798Dd03199De2164CFc1ecC14205e69ede";
 
 function App() {
   const [wallet, setWallet] = useState(null);
@@ -74,6 +74,10 @@ function App() {
 
       for (let i = 0; i < Number(count); i++) {
         const card = await marketplace.getCard(i);
+
+        // Skip deleted cards
+        if (card[3] === "0x0000000000000000000000000000000000000000") continue;
+
         cardList.push({
           id: i,
           name: card[0],
@@ -172,6 +176,7 @@ function App() {
       ) : (
         cards.map((card) => (
           <div key={card.id} style={{ border: "1px solid #ccc", margin: "10px", padding: "10px" }}>
+            <p><strong>ID:</strong> {card.id}</p>
             <p><strong>Name:</strong> {card.name}</p>
             <p><strong>Rarity:</strong> {card.rarity}</p>
             <p><strong>Price:</strong> {card.price} CARD</p>

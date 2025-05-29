@@ -31,6 +31,12 @@ contract CardMarketplace {
         card.owner = msg.sender;
     }
 
+    function deleteCard(uint256 cardId) public {
+        require(cards[cardId].owner != address(0), "Card does not exist");
+        require(cards[cardId].owner == msg.sender, "Not the owner of this card");
+        delete cards[cardId];
+    }
+
     function getCard(uint256 cardId) public view returns (string memory, string memory, uint256, address) {
         Card memory c = cards[cardId];
         return (c.name, c.rarity, c.price, c.owner);

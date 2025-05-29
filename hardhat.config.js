@@ -5,9 +5,9 @@ module.exports = {
   networks: {
     ganache: {
       url: "http://127.0.0.1:7545",
-      accounts: [
-        "0xd9a507a5c3cbd3cdca22111181480244359fb9818083f4aca6f04b4d0c8ded22"
-      ]
+      accounts: {
+        mnemonic: "laptop soda duty liar stumble topple deny sudden perfect cinnamon chapter winter"
+      }
     }
   }
 };
