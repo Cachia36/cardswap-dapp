@@ -30,7 +30,7 @@ This will create 1,000,000 CARD tokens to the deployer (The first account given 
 ```cd frontend``` then 
 ```npm start```
 
-The frontend allows the following functionality:
+Once MetaMask is set up and connected to the Ganache network, the frontend allows the following functionality:
 - Mint a Card. This minted card will take the connected wallet from MetaMask and use the wallet address to recognize the owner of the card.
 - Buy a Card.
 - View Cards
@@ -41,6 +41,26 @@ To buy a Card:
 - Refresh the page, the wallet address should be updated to the new address.
 - Now under the card you want to buy, a "buy card" button should appear if you are not the owner of that card.
 - You should be able to buy the card and become it's new owner if you have enough CARD tokens.
+
+## MetaMask Setup (Required)
+To interact with the DApp, you must have the MetaMask browser extension installed and connected to your local Ganache network.
+
+**1. Install MetaMask**
+- Download from: https://metamask.io/
+- Add it to your browser
+  
+**2. Connect to Ganache**
+- Open Ganache and note the **RPC Server** (usually http://127.0.0.1:7545) and **Chain ID** (1337)
+- In MetaMask:
+  - Go to settings > Networks> Add a network manually
+  - New RPC URL: http://127.0.0.1:7545
+  - Chain ID: 1337
+  - Save
+    
+**3. Import a Ganache Account**
+- In Ganache, copy the private key of one of the first account (click the key icon and make sure the use the first account as it will have 1,000,000 CARD tokens) 
+- Paste the private key
+- This account will now be available in MetaMask and ready to use.
 
 ## Smart Contracts Overview
 - **CardToken.sol** is a solidity file which implements an ERC20 token using openZeppelin and mints tokens to initial users.
