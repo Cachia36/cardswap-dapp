@@ -48,11 +48,6 @@ describe("CardMarketplace", function () {
         expect(card[3]).to.equal(user.address); // new owner
     });
 
-    /*
-    To implement
-    Nonexistend card - reverts if the card Id doesn't exist
-    */
-
     it("Should fail if a user does not have enough tokens", async function () {
         await marketplace.mintCard("Leviathan", "Rare", ethers.parseEther("500"));
         await token.connect(attacker).approve(await marketplace.getAddress(), ethers.parseEther("100"));
